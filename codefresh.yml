@@ -7,7 +7,7 @@ steps:
     composition: docker-compose.yml
     environment_name: "demo"
     composition_variables:
-      - VALUEE=myvalue
+      - VALUE=myvalue
 
 
 
