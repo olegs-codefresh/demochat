@@ -39,5 +39,5 @@ spec:
       dnsPolicy: ClusterFirst
       securityContext: {}
       imagePullSecrets:
-        - name: codefresh-generated-r.cfcr.io-cfcr-default
+        - name: codefresh-generated-r.cfcr.io-cfcr-codefresh-demochat-canary
       schedulerName: default-scheduler
