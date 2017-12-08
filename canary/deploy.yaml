@@ -1,6 +1,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
+  name: demochat-canary
+  namespace: codefresh-demochat-canary
+  creationTimestamp: '2017-12-07T18:23:05Z'
   labels:
     app: demochat
     release: canary
@@ -11,11 +14,6 @@ spec:
   selector:
     matchLabels:
       app: demochat
-  strategy:
-    rollingUpdate:
-      maxSurge: 50%
-      maxUnavailable: 50%
-    type: RollingUpdate
   template:
     metadata:
       labels:
