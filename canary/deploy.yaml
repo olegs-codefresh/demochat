@@ -1,49 +1,38 @@
-kind: Deployment
 apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
-  name: demochat-canary
-  namespace: default
-  creationTimestamp: '2017-12-07T18:23:05Z'
   labels:
     app: demochat
-    io.codefresh.auto-generated: bb40e2b2-6954-43bb-97c7-d7f78aa6f9fe
-    io.codefresh.generated-at: '1512670986007'
     release: canary
-  annotations:
-    deployment.kubernetes.io/revision: '2'
+  name: demochat-canary
+  namespace: codefresh-demochat-canary
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: demochat
-      io.codefresh.auto-generated: bb40e2b2-6954-43bb-97c7-d7f78aa6f9fe
-      io.codefresh.generated-at: '1512670986007'
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+    type: RollingUpdate
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: demochat
-        io.codefresh.auto-generated: bb40e2b2-6954-43bb-97c7-d7f78aa6f9fe
-        io.codefresh.generated-at: '1512670986007'
-      annotations:
     spec:
       containers:
-        - name: demochat
-          image: 'r.cfcr.io/olegs-codefresh/olegscodefresh/demochat:canary'
-          ports:
-            - containerPort: 5000
-              protocol: TCP
-          env:
-            - name: MONGO_DOCKER
-              value: 'mongodb://mongo'
-          resources: {}
-          terminationMessagePath: /dev/termination-log
-          terminationMessagePolicy: File
-          imagePullPolicy: Always
-      restartPolicy: Always
-      terminationGracePeriodSeconds: 40
-      dnsPolicy: ClusterFirst
-      securityContext: {}
+      - env:
+        - name: MONGO_DOCKER
+          value: mongodb://mongo
+        image: r.cfcr.io/sakibulhasan-wsib_github/olegscodefresh/demochat:canary
+        imagePullPolicy: Always
+        name: demochat
+        ports:
+        - containerPort: 5000
+          protocol: TCP
       imagePullSecrets:
-        - name: codefresh-generated-r.cfcr.io-cfcr-default
+      - name: codefresh-generated-r.cfcr.io-cfcr-codefresh-demochat-canary
+      restartPolicy: Always
       schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 40
